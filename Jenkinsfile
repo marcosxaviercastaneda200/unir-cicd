@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Unit tests') {
             steps {
-               echo 'results pipeline'
+               echo 'results.'
             }
         }
     }
