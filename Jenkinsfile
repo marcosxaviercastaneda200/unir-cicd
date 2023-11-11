@@ -1,20 +1,28 @@
 pipeline {
     agent any
     stages {
+        stage('Source') {
+            steps {
+                git 'https://github.com/srayuso/unir-cicd.git'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building stage!'
+                sh 'make build'
             }
         }
         stage('Unit tests') {
             steps {
-               echo 'results again'
+                sh 'make test-unit'
+                archiveArtifacts artifacts: 'results/*.xml'
             }
         }
     }
     post {
         always {
-           echo 'Post action'
+            junit 'results/*_result.xml'
+            cleanWs()
         }
     }
 }
